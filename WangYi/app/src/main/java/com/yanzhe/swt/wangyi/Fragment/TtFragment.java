@@ -53,6 +53,7 @@ public class TtFragment extends Fragment {
          * 给refreshLayout设置颜色，监听
          */
         refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.refresh);
+        refreshLayout.setDistanceToTriggerSync(200);//设置了下拉距离 ，防止影响viewpager的滑动不流畅
         refreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
