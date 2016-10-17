@@ -4,6 +4,7 @@ package com.yanzhe.swt.wangyi;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;import android.support.v4.view.ViewPager;
 import android.view.Gravity;
@@ -29,55 +30,68 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private List<Fragment> fragmentList;
     private ViewPager main_vp;
     private ImageView find, add, more;
-    TtFragment ttFragment = new TtFragment();
-    JxFragment jxFragment = new JxFragment();
-    YlFragment ylFragment = new YlFragment();
-    TyFragment tyFragment = new TyFragment();
-    WyhFragment wyhFragment = new WyhFragment();
-
-
     private ViewPagerIndicate mIndicate;
-    private int[] mTextColors = {0xFFA0A0A0, 0xFF000000};
-    private int mUnderlineColor = 0xFF168EFF;
-    private String[] mTitles = new String[]{"头条", "精选", "娱乐", "体育", "网易号"};
-
+    private TabLayout mTabLayout;
+    //  private int[] mTextColors = {0xFFA0A0A0, 0xFF000000};//字体的颜色
+    // private int mUnderlineColor = 0xFF168EFF; //下划线的颜色
+    //   private String[] mTitles = new String[]{"头条", "精选", "娱乐", "体育", "网易号"};//标签的文字
+    private List<String> mTitleList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        main_vp = (ViewPager) findViewById(R.id.main_vp);
-        add = (ImageView) findViewById(R.id.add);
-        find = (ImageView) findViewById(R.id.find);
-        more = (ImageView) findViewById(R.id.more);
+
+        initdata();
+        // initViewPagerIndicate(main_vp);
 
         add.setOnClickListener(this);
         more.setOnClickListener(this);
         find.setOnClickListener(this);
 
+
+        mTitleList.add("头条");
+        mTitleList.add("精选");
+        mTitleList.add("娱乐");
+        mTitleList.add("体育");
+        mTitleList.add("网易号");
+        FMadapter fMadapter = new FMadapter(getSupportFragmentManager(), fragmentList,mTitleList);
+        main_vp.setAdapter(fMadapter);
+        mTabLayout.setupWithViewPager(main_vp);//将TabLayout和ViewPager关联起来。
+
+    }
+
+    /**
+     * 初始化数据
+     */
+    private void initdata() {
+        TtFragment ttFragment = new TtFragment();
+        JxFragment jxFragment = new JxFragment();
+        YlFragment ylFragment = new YlFragment();
+        TyFragment tyFragment = new TyFragment();
+        WyhFragment wyhFragment = new WyhFragment();
+        main_vp = (ViewPager) findViewById(R.id.main_vp);
+        add = (ImageView) findViewById(R.id.add);
+        find = (ImageView) findViewById(R.id.find);
+        more = (ImageView) findViewById(R.id.more);
+        mTabLayout = (TabLayout) findViewById(R.id.tabs);
         fragmentList = new ArrayList<Fragment>();
         fragmentList.add(ttFragment);
         fragmentList.add(jxFragment);
         fragmentList.add(ylFragment);
         fragmentList.add(tyFragment);
         fragmentList.add(wyhFragment);
-        initViewPagerIndicate(main_vp);
-
-        FMadapter fMadapter = new FMadapter(getSupportFragmentManager(), fragmentList);
-
-        main_vp.setAdapter(fMadapter);
-
-
     }
 
-    /**
+
+   /* *//**
      * 初始化ViewPagerIndicate，并且和ViewPager建立关联
      *
      * @param main_vp viewpager
-     */
+     *//*
     private void initViewPagerIndicate(ViewPager main_vp) {
-        mIndicate = (ViewPagerIndicate) findViewById(R.id.indicate);
+        mIndicate = (ViewPagerIndicate) findViewById(R.id.indicate);//自定义ViewPagerIndicate继承HorizontalScrollView，重写
         //设置标签样式、文本和颜色
         mIndicate.resetText(R.layout.indicate, mTitles, mTextColors);
         //设置下划线粗细和颜色
@@ -86,7 +100,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mIndicate.resetViewPager(main_vp);
         //设置初始化完成
         mIndicate.setOk();
-    }
+    }*/
 
 
     /**
@@ -116,7 +130,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
     }
 
-
     /**
      * 返回物理键
      */
@@ -127,7 +140,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
         return super.onKeyDown(keyCode, event);
     }
-
 
     /**
      * 设置安卓物理键点击弹出对话框

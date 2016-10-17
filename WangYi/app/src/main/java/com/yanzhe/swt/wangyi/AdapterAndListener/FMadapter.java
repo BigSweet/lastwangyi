@@ -12,10 +12,12 @@ import java.util.List;
  */
 public class FMadapter extends FragmentStatePagerAdapter {
     private List<Fragment> mtList;
+    private List<String> mTitleList;
 
-    public FMadapter(FragmentManager fm, List<Fragment> fragmentList) {
+    public FMadapter(FragmentManager fm, List<Fragment> fragmentList ,List<String> list) {
         super(fm);
         mtList = fragmentList;
+        mTitleList=list;
     }
 
     @Override
@@ -26,5 +28,11 @@ public class FMadapter extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         return mtList.size();
+    }
+
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return mTitleList.get(position);
     }
 }
