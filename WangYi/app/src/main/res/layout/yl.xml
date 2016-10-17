@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
-
-
-    <TextView
+    <com.yanzhe.swt.wangyi.Agame.GamePintuLayout
+        android:id="@+id/id_gameview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="这是娱乐页面"/>
+        android:padding="5dp">
 
-</LinearLayout>
+    </com.yanzhe.swt.wangyi.Agame.GamePintuLayout>
+
+</RelativeLayout>
